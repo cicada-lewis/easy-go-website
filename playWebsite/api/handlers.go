@@ -1,4 +1,4 @@
-package api
+package main
 
 import (
 	"fmt"
@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 )
+
 
 func CreateUser(writer http.ResponseWriter, request *http.Request, params httprouter.Params) {
 	writer.Write([]byte("Create User Handler"))
