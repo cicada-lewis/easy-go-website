@@ -19,3 +19,9 @@ type VideoInfo struct {
 	CreateTime time.Time
 }
 
+type Comment struct {
+	CommentId string
+	VideoId string
+	Author string
+	Content string
+}
