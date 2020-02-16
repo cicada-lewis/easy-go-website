@@ -65,12 +65,12 @@ func AddNewVideo(aid int, name string) (*defs.VideoInfo, error) {
 
 	ct := time.Now()
 	ctime := ct.Format("Jan 02 2006, 15:04:05") // M D y, HH:MM:SS
-	stmtIns, err := dbConn.Prepare("INSERT INTO video_info (video_id, author_id, name, display_ctime) VALUES (?, ?, ?, ?)")
+	stmtIns, err := dbConn.Prepare("INSERT INTO video_info (video_id, author_id, name, display_ctime, create_time) VALUES (?, ?, ?, ?, ?)")
 	defer stmtIns.Close()
 	if err != nil {
 		return nil, err
 	}
-	_, err = stmtIns.Exec(vid, aid, name, ctime)
+	_, err = stmtIns.Exec(vid, aid, name, ctime, ct)
 	if err != nil {
 		return nil, err
 	}
@@ -129,13 +129,13 @@ func AddNewComments(vid string, aid int, content string) error {
 		return err
 	}
 	stmtIns, err := dbConn.Prepare(
-		"INSERT INTO comments (comment_id, video_id, author_id, content) VALUES (?, ?, ?, ?)")
+		"INSERT INTO comments (comment_id, video_id, author_id, content, create_time) VALUES (?, ?, ?, ?, ?)")
 	defer stmtIns.Close()
 	if err != nil {
 		return nil
 	}
 
-	_, err = stmtIns.Exec(commentId, vid, aid, content)
+	_, err = stmtIns.Exec(commentId, vid, aid, content, time.Now())
 	if err != nil {
 		return err
 	}
@@ -147,7 +147,7 @@ func ListComments(vid string, from, to int) ([]*defs.Comment, error) {
 	stmtOut, err := dbConn.Prepare(`SELECT comments.comment_id, users.login_name, comments.content from comments
 											INNER JOIN users ON comments.author_id = users.user_id 
 											WHERE comments.video_id = ? 
-											AND comments.time > FROM_UNIXTIME(?) AND comments.time <= FROM_UNIXTIME(?) `)
+											AND comments.create_time > FROM_UNIXTIME(?) AND comments.create_time <= FROM_UNIXTIME(?) `)
 	if err != nil {
 		return nil, err
 	}
