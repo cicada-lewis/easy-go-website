@@ -1,6 +1,8 @@
 package dbops
 
 import (
+	"github.com/Catelemmon/easy-go-website/playWebsite/api/defs"
+	_ "github.com/Catelemmon/easy-go-website/playWebsite/api/defs"
 	"strconv"
 	"testing"
 	"time"
@@ -140,4 +142,55 @@ func testListComments(t *testing.T) {
 }
 
 
+func TestSessions(t *testing.T) {
+	t.Run("AddSessions", testInsertSession)
+	t.Run("RetrieveSessions", testRetrieveSession)
+	t.Run("RetrieveAllSessions", testRetrieveAllSessions)
+	t.Run("DeleteSession", testDeleteSession)
+}
 
+func testDeleteSession(t *testing.T) {
+	sid := "12345"
+	err := DeleteSession(sid)
+	if err != nil {
+		t.Logf("Error at DeleteSession: %v", err)
+	}
+	return
+}
+
+
+
+func testRetrieveAllSessions(t *testing.T) {
+	sss, err := RetrieveAllSessions()
+	if err != nil {
+		t.Errorf("Error at RetrieveAllSessions: %v", err)
+	}
+	sss.Range(func(k, v interface{}) bool {
+		ss, ok := v.(*defs.SimpleSession)
+		if !ok {
+			return false
+		}
+		t.Logf("Sid: %s, Username: %s, TTL: %d", k, ss.Username, ss.TTL)
+		return true
+	})
+}
+
+func testRetrieveSession(t *testing.T) {
+	ss, err := RetrieveSession("12345")
+	if err != nil {
+		t.Errorf("Error at RetrieveSession: %v", err)
+	}
+	t.Logf("tll: %d, username: %s", ss.TTL, ss.Username)
+}
+
+func testInsertSession(t *testing.T) {
+	err := InsertSession("12345", 233333, "cicada")
+	if err != nil {
+		t.Errorf("Error at First InsertSession: %v", err)
+	}
+
+	err = InsertSession("54321", 233333, "naruto")
+	if err != nil {
+		t.Errorf("Error at Second InsertSession: %v", err)
+	}
+}
