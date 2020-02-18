@@ -1,8 +1,8 @@
 package dbops
 
 import (
+
 	"github.com/Catelemmon/easy-go-website/playWebsite/api/defs"
-	_ "github.com/Catelemmon/easy-go-website/playWebsite/api/defs"
 	"strconv"
 	"testing"
 	"time"
@@ -138,6 +138,7 @@ func testListComments(t *testing.T) {
 	}
 	for i, ele := range res {
 		t.Logf("comment %d: %v \n", i, ele)
+		//fmt.Printf("comment %d: %v \n", i, ele)
 	}
 }
 
