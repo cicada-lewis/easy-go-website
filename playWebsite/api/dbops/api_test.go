@@ -1,7 +1,6 @@
 package dbops
 
 import (
-
 	"github.com/Catelemmon/easy-go-website/playWebsite/api/defs"
 	"strconv"
 	"testing"
@@ -137,6 +136,7 @@ func testListComments(t *testing.T) {
 		t.Errorf("Error at ListComments: %v", err)
 	}
 	for i, ele := range res {
+
 		t.Logf("comment %d: %v \n", i, ele)
 		//fmt.Printf("comment %d: %v \n", i, ele)
 	}
