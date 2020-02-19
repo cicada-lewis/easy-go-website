@@ -4,13 +4,21 @@ import (
 	"time"
 )
 
+
+// requests
 type UserCredential struct {
 	Username string `json:"user_name"`
 	Pwd string `json:"pwd"`
 }
 
-// data model
+// response
+type SignedUp struct {
+	Success bool `json: "success"`
+	SessionId string `json: "session_id"`
+}
 
+
+// data model
 type VideoInfo struct {
 	VideoId string
 	AuthorId int

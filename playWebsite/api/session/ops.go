@@ -2,11 +2,11 @@ package session
 
 
 import (
-	"github.com/Catelemmon/easy-go-website/playWebsite/api/defs"
-	"time"
-	"sync"
 	"github.com/Catelemmon/easy-go-website/playWebsite/api/dbops"
+	"github.com/Catelemmon/easy-go-website/playWebsite/api/defs"
 	"github.com/Catelemmon/easy-go-website/playWebsite/api/utils"
+	"sync"
+	"time"
 )
 
 
